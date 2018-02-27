@@ -25,5 +25,29 @@ LOAD DATA INPATH '/user/edureka_206100/customerdata' INTO TABLE CUST_DTLS;
 SELECT COUNT(*) FROM CUST_DTLS;
 
 
+==================================================================================================================================
+
+//Some Data Analysis on different tables available 
+
+//Performing joins on tables holding customer and products purchased information
+select a.firstname, a.profession,a.level,b.product from out2 a LEFT JOIN out1 b on a.custno=b.custno order by b.product;
+
+//Transaction records- calculating the total amount per category, city
+select sum(amount), category from txnrecords group by category;
+select sum(amount), city from txnrecords group by city;
+select sum(amount), city, category from txnrecords group by category, city order by city;
+
+====================================================================================================================================
+
+//Creating Dynamic partitioning of hive table
+
+CREATE TABLE TXN_RECS_PART (TXNNO INT, TXNDATA STRING, CUSTNO INT, AMOUNT DOUBLE, PRODUCT STRING, CITY STRING, STATE STRING, SPENDBY STRING) PARTITIONED BY (CATEGORY STRING) CLUSTERED BY (STATE) INTO 5 BUCKETS ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE;
+
+//Inserting data into partitioned table
+FROM TXNRECORDS TXN INSERT OVERWRITE TABLE TXN_RECS_PART PARTITION(CATEGORY) SELECT TXN.TXNNO, TXN.TXNDATA, TXN.CUSTNO,TXN.AMOUNT, TXN.PRODUCT, TXN.CITY, TXN.STATE, TXN.SPENDBY, TXN.CATEGORY;
+
+
+
+
 
 
