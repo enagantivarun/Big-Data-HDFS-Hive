@@ -8,7 +8,10 @@ hdfs dfs -ls /user/edureka_206100
 
 //Copy the file available in local file system to hdfs using copyFromLocal and put, this file will replicated in the data nodes as per the replication factor set in hdfs-site.xml configuration file.
 hdfs dfs -copyFromLocal /mnt/home/edureka_206100/customerdata.txt /user/edureka_206100/Customer
-//first remove the file customerdata.txt in hdfs location to test this command, else file exsists error occurs 
+
+hdfs dfs -rm /user/edureka_206100/Customer/customerdata.txt
+
+//Another way to Copy files, first remove the file customerdata.txt in hdfs location to test this command, else file exsists error occurs 
 hdfs dfs -put /mnt/home/edureka_206100/customerdata.txt /user/edureka_206100/Customer
 
 //Copy file from one directory to other directory
@@ -16,4 +19,19 @@ hdfs dfs -cp /user/edureka_206100/Customer/customerdata.txt /user/edureka_206100
 
 //Copy file from hdfs to local file system
 hdfs dfs -copyToLocal /user/edureka_206100/employee/employee.txt /mnt/home/edureka_206100
+
+//Display the content in the file
+hdfs dfs -cat /user/edureka_206100/Customer/customerdata.txt
+
+//Appending one file to other file
+hdfs dfs -appendToFile /mnt/home/edureka_206100/customerdata.txt /user/edureka_206100/employee/employee.txt
+
+//count the number of files and bytes in the specified path
+hdfs dfs -count /user/edureka_206100/Customer
+
+//To get the date and time information of the files/directory
+hdfs dfs -stat /user/edureka_206100/Customer
+
+
+
 
