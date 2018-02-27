@@ -1,0 +1,29 @@
+// Creating hive table in warehouse directory
+
+CREATE TABLE CUST_DTLS (NAME STRING, AGE INT, CITY STRING, COUNTRY STRING)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+//Creating hive table in hdfs in other location than default warehouse directory
+CREATE TABLE CUST_DTLS (NAME STRING, AGE INT, CITY STRING, COUNTRY STRING)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+LOCATION ';
+
+//Loading data from local file system
+LOAD DATA LOCAL INPATH 'customerdata.txt' OVERWRITES INTO TABLE CUST_DTLS;
+
+//Copy source file from local system to HDFS
+hdfs dfs -copyFromLocal /mnt/home/edureka/customerdata.txt /user/edureka_206100/customer
+
+//Loading data into hive table from HDFS
+LOAD DATA INPATH '/user/edureka_206100/customerdata' INTO TABLE CUST_DTLS;
+
+//Count the number of rows loaded
+SELECT COUNT(*) FROM CUST_DTLS;
+
+
+
+
