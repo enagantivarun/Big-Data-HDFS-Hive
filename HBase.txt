@@ -1,0 +1,26 @@
+//HBase shell
+
+//Creating tables in hbase, Data Model (tablename, rowkey id, column families, column qualifiers)
+create 'player','batting','bowling'
+
+//Inserting data into HBase table, column qualifiers can be added on fly and their is no specific data types for values.
+put 'player','Mick','batting:runs','12000'
+put 'player','bhuvi','bowling:avg','23.45'
+
+//get the specific data
+get('player','Mick')
+
+//Check the results
+scan 'player'
+
+//Importing data from RDBMS into HBase using sqoop, creating new table player
+sqoop import --connect jdbc:mysql://sqoopdb.edu.cloudlab.com/sport 
+--table player --username labuser --password ***** 
+--hbase-table player
+--column-family batting
+--hbase-create-table
+
+
+=====================================================================================
+
+
